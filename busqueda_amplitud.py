@@ -35,6 +35,7 @@ def busqueda_amplitud(mapa):
             copiaMapa1 = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa1, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right")
             nuevoNodo.setEsferas(nodo.getEsferas())
+            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_right()
             colaDeNodos.append(nuevoNodo)
 
@@ -43,6 +44,7 @@ def busqueda_amplitud(mapa):
             copiaMapa2 = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa2, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left")
             nuevoNodo.setEsferas(nodo.getEsferas())
+            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_left()
             colaDeNodos.append(nuevoNodo)
 
@@ -51,6 +53,7 @@ def busqueda_amplitud(mapa):
             copiaMapa3 = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa3, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down")
             nuevoNodo.setEsferas(nodo.getEsferas())
+            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_down()
             colaDeNodos.append(nuevoNodo)
 
@@ -59,6 +62,7 @@ def busqueda_amplitud(mapa):
             copiaMapa4 = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa4, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up")
             nuevoNodo.setEsferas(nodo.getEsferas())
+            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_up()
             colaDeNodos.append(nuevoNodo)
 
