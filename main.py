@@ -36,7 +36,7 @@ def imprimir():
         # Dibujar el mapa en el canvas
         draw_map(canvas, map_data)
         ventana.update()
-        time.sleep(1)
+        time.sleep(0.5)
 
 # Crear la ventana
 ventana = tk.Tk()
