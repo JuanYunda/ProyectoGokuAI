@@ -2,21 +2,22 @@ import numpy as np
 from collections import deque
 import matplotlib.pyplot as plt
 import copy
-from classNodoCosto import Nodo
+from classNodoCosto import NodoCosto
 import time
 
 def busqueda_costo(mapa):
+
     profundidadFinal = 0
     colaDeNodos = deque()
     colaOrdenada = deque()
 
     inicio = time.time()
-    for i in range(len(matrizInicial)):
-        for j in range(len(matrizInicial[i])):
-            if matrizInicial[i][j] == 2:
+    for i in range(len(mapa)):
+        for j in range(len(mapa[i])):
+            if mapa[i][j] == 2:
                 goku_row, goku_col = i, j
 
-    nodoRaiz = NodoCosto(None, matrizInicial, 0, goku_row, goku_col, "")
+    nodoRaiz = NodoCosto(None, mapa, 0, goku_row, goku_col, "")
     nodo = nodoRaiz
 
     cantidadDeNodosExpandidos = 0
@@ -31,7 +32,7 @@ def busqueda_costo(mapa):
             break
 
         else:
-            if nodo.getGoku_col() < len(matrizInicial[0]) - 1:
+            if nodo.getGoku_col() < len(mapa[0]) - 1:
                 if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col() + 1] != 1 and (
                     nodo.getMovimientoAnterior() != "left"
                     or nodo.getMovimientoAnterior() == ""
@@ -73,7 +74,7 @@ def busqueda_costo(mapa):
                     nuevoNodo.move_left()
                     colaDeNodos.append(nuevoNodo)
 
-            if nodo.getGoku_row() < len(matrizInicial) - 1:
+            if nodo.getGoku_row() < len(mapa) - 1:
                 if nodo.getMapa()[nodo.getGoku_row() + 1][nodo.getGoku_col()] != 1 and (
                     nodo.getMovimientoAnterior() != "up"
                     or nodo.getMovimientoAnterior() == ""
