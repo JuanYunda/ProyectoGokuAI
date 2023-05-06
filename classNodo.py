@@ -18,7 +18,7 @@ class Nodo:
     self.ultimaCasilla = 0
   #funciones de movimiento de Goku
 
-  def move_right(self):
+  """ef move_right(self):
       #Revisar si en la posicion a la que se va a mover hay una esfera
       if(self.mapa[self.goku_row][self.goku_col+1]==6):
         self.setEsferas(self.esferas+1)
@@ -27,7 +27,7 @@ class Nodo:
       self.mapa[self.goku_row][self.goku_col+1] = 2
       self.goku_col = self.goku_col+1
       #print("se mueve derecha")
-
+"""
   def move_right(self):
       #Revisar si en la posicion a la que se va a mover hay una esfera
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla

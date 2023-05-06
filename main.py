@@ -1,5 +1,6 @@
 import tkinter as tk
 from busqueda_amplitud import busqueda_amplitud
+from busqueda_profundidad import busqueda_profundidad
 import time
 from PIL import Image, ImageTk
 import easygui as eg
@@ -90,11 +91,12 @@ def busqueda_anchura():
     solucion = busqueda_amplitud(matrizInicial)
     imprimir()
     
-"""def busqueda_profundidad():
+def busqueda_por_profundidad():
     global solucion
-    solucion = buscar_camino_profundidad()
+    solucion = busqueda_profundidad(matrizInicial)
+    imprimir()
     
-def busqueda_costo_uniforme():
+"""def busqueda_costo_uniforme():
     global solucion
     solucion = buscar_camino_costo_uniforme()
     
@@ -114,10 +116,10 @@ def crear_botones():
     btn_anchura = tk.Button(botones, text='Búsqueda en Anchura', command=busqueda_anchura)
     btn_anchura.pack(side='left', padx=5)
     
-    """btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_profundidad)
+    btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_por_profundidad)
     btn_profundidad.pack(side='left', padx=5)
     
-    btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
+    """btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
     btn_costo_uniforme.pack(side='left', padx=5)
     
     btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
