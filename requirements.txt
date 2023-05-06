@@ -38,7 +38,7 @@ parso==0.8.3
 pefile==2023.2.7
 pickleshare==0.7.5
 Pillow==9.5.0
-platformdirs==3.2.0
+platformdirs
 prompt-toolkit==3.0.38
 psutil==5.9.4
 pure-eval==0.2.2
