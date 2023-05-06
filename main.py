@@ -36,7 +36,7 @@ def imprimir():
         # Dibujar el mapa en el canvas
         draw_map(canvas, map_data)
         ventana.update()
-        time.sleep(1)
+        time.sleep(0.5)
 
 # Crear la ventana
 ventana = tk.Tk()
@@ -102,9 +102,9 @@ def busqueda_a_estrella():
     global solucion
     solucion = buscar_camino_a_estrella()
     
-def busqueda_voraz():
+def busqueda_avara():
     global solucion
-    solucion = buscar_camino_voraz()"""
+    solucion = buscar_camino_avara()"""
 
 # Función para crear los botones
 def crear_botones():
@@ -123,7 +123,7 @@ def crear_botones():
     btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
     btn_a_estrella.pack(side='left', padx=5)
     
-    btn_voraz = tk.Button(botones, text='Búsqueda Voraz', command=busqueda_voraz)
+    btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
     btn_voraz.pack(side='left', padx=5)"""
 
 # Llamar a la función para crear los botones
