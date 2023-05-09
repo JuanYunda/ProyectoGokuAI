@@ -17,6 +17,10 @@ def busqueda_profundidad(mapa):
     goku_row, goku_col = 0, 0
     nodosObtenidos = 0  
     inicio = time.time()
+    arrayRow = deque()
+    arrayCol = deque()
+    arrayRow.append(-1)
+    arrayCol.append(-1)
     #Me recorre todo el mapa para encontrar la posición inicial
     for i in range(len(mapa)):
       for j in range(len(mapa[i])):
@@ -25,8 +29,6 @@ def busqueda_profundidad(mapa):
     #Se crea el nodo raiz para comenzar la busqueda
     nodoRaiz = Nodo(None, mapa, 0, goku_row, goku_col, "")
     nodo = nodoRaiz
-    #Lista de nodos visitados
-    nodosVisitados = deque()
 
     #Se trabaja un ciclo while para el proceso
     while(True):
@@ -38,51 +40,66 @@ def busqueda_profundidad(mapa):
         profundidadFinal = nodo.getProfundidad()
         resultado = nodo
         break
+      if nodo.getEsferas()==1:
+        arrayCol.clear()
+        arrayRow.clear()
+        arrayCol.append(-1)
+        arrayRow.append(-1)
+      
+      if len(colaDeNodos) != 0:
+        for i in range(0, len(arrayCol)):
+          if(arrayCol[i] == nodo.getGoku_col and arrayRow[i] == nodo.getGoku_row):
+            i = 0
+            if len(colaDeNodos) != 0:
+              nodo = colaDeNodos.popleft()
+      
       #De lo contrario, se me recorre el mapa. La prioridad es: Derecha, Izquierda, Abajo, Arriba
       #El método de profundidad me recorre las posibilidades, y luego me expande la última posibilidad encontrada. Es decir
       #Si realiza un movimiendo de izquierda y leugo uno de derecha para el nodo padre, profundidad me seguirá con expandir el de la derecha primero
       else:
         if nodo.getGoku_col() < len(mapa[0])-1:
-          if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()+1] != 1 and (nodo.getMovimientoAnterior() != "left" or nodo.getMovimientoAnterior() == "") and nodo not in nodosVisitados: #right
+          if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()+1] != 1 and (nodo.getMovimientoAnterior() != "left" or nodo.getMovimientoAnterior() == ""): #right
             copiaMapa = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_right()
             colaDeNodos.appendleft(nuevoNodo)
+            arrayCol.appendleft(nuevoNodo.getGoku_col)
+            arrayRow.appendleft(nuevoNodo.getGoku_row)
           
         if nodo.getGoku_row() > 0:
-          if nodo.getMapa()[nodo.getGoku_row()-1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "down" or nodo.getMovimientoAnterior() == "") and nodo not in nodosVisitados: #up
+          if nodo.getMapa()[nodo.getGoku_row()-1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "down" or nodo.getMovimientoAnterior() == ""): #up
             copiaMapa = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_up()
             colaDeNodos.appendleft(nuevoNodo)
-
+            arrayCol.appendleft(nuevoNodo.getGoku_col)
+            arrayRow.appendleft(nuevoNodo.getGoku_row)
         if nodo.getGoku_col() > 0:
-          if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()-1] != 1 and (nodo.getMovimientoAnterior() != "right" or nodo.getMovimientoAnterior() == "") and nodo not in nodosVisitados: #left
+          if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()-1] != 1 and (nodo.getMovimientoAnterior() != "right" or nodo.getMovimientoAnterior() == ""): #left
             copiaMapa = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_left()
             colaDeNodos.appendleft(nuevoNodo)
+            arrayCol.appendleft(nuevoNodo.getGoku_col)
+            arrayRow.appendleft(nuevoNodo.getGoku_row)
 
         if nodo.getGoku_row() < len(mapa)-1:
-          if nodo.getMapa()[nodo.getGoku_row()+1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "up" or nodo.getMovimientoAnterior() == "") and nodo not in nodosVisitados: #down
+          if nodo.getMapa()[nodo.getGoku_row()+1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "up" or nodo.getMovimientoAnterior() == ""): #down
             copiaMapa = copy.deepcopy(nodo.getMapa())
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_down()
             colaDeNodos.appendleft(nuevoNodo)
+            arrayCol.appendleft(nuevoNodo.getGoku_col)
+            arrayRow.appendleft(nuevoNodo.getGoku_row)
 
-        if(nodo not in nodosVisitados):
-          nodosVisitados.appendleft(nodo)
-        #Luego de todo, se me elimina el nodo actual de la cola de nodos y se me asigna el que sigue
-        if(nodo.getEsferas() != nodosVisitados[0].getEsferas()):
-          nodosVisitados.clear()
         nodo = colaDeNodos.popleft()
     #Luego de finalizar el ciclo, se crea un arreglo de solución
     #Como cada nodo sabe cual es su padre, entonces me recorre los nodos de padre a padre
