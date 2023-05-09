@@ -32,7 +32,7 @@ def busqueda_profundidad(mapa):
     while(True):
       #resultado me refiere a la idea de que el nodo actual sea el final. Por defecto siempre apunta al nodo actual
       resultado = nodo
-
+      nodosObtenidos+=1
       #Cuando se tenga las esferas, se termina el ciclo while, se me pasa la profundidad final y el nodo actual
       if nodo.getEsferas()==2:
         profundidadFinal = nodo.getProfundidad()
@@ -50,7 +50,6 @@ def busqueda_profundidad(mapa):
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_right()
             colaDeNodos.appendleft(nuevoNodo)
-            nodosObtenidos+=1
           
         if nodo.getGoku_row() > 0:
           if nodo.getMapa()[nodo.getGoku_row()-1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "down" or nodo.getMovimientoAnterior() == "") and nodo not in nodosVisitados: #up
@@ -60,7 +59,6 @@ def busqueda_profundidad(mapa):
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_up()
             colaDeNodos.appendleft(nuevoNodo)
-            nodosObtenidos+=1
 
         if nodo.getGoku_col() > 0:
           if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()-1] != 1 and (nodo.getMovimientoAnterior() != "right" or nodo.getMovimientoAnterior() == "") and nodo not in nodosVisitados: #left
@@ -70,7 +68,6 @@ def busqueda_profundidad(mapa):
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_left()
             colaDeNodos.appendleft(nuevoNodo)
-            nodosObtenidos+=1
 
         if nodo.getGoku_row() < len(mapa)-1:
           if nodo.getMapa()[nodo.getGoku_row()+1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "up" or nodo.getMovimientoAnterior() == "") and nodo not in nodosVisitados: #down
@@ -80,7 +77,6 @@ def busqueda_profundidad(mapa):
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
             nuevoNodo.move_down()
             colaDeNodos.appendleft(nuevoNodo)
-            nodosObtenidos+=1
 
         if(nodo not in nodosVisitados):
           nodosVisitados.appendleft(nodo)
@@ -88,7 +84,6 @@ def busqueda_profundidad(mapa):
         if(nodo.getEsferas() != nodosVisitados[0].getEsferas()):
           nodosVisitados.clear()
         nodo = colaDeNodos.popleft()
-        print(nodo.getMapa())
     #Luego de finalizar el ciclo, se crea un arreglo de solución
     #Como cada nodo sabe cual es su padre, entonces me recorre los nodos de padre a padre
     #Hasta llegar al nodo inicial.

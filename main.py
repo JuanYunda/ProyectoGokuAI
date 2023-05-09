@@ -2,6 +2,7 @@ import tkinter as tk
 from busqueda_amplitud import busqueda_amplitud
 from busqueda_profundidad import busqueda_profundidad
 from busqueda_AStar import busqueda_A_Star
+from busqueda_Avara import busqueda_Avara
 import time
 from PIL import Image, ImageTk
 import easygui as eg
@@ -92,18 +93,21 @@ def busqueda_a_estrella():
         flag = True
     actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
     imprimir()
-
-
-
-"""    
+  
 def busqueda_avara():
     global solucion
-    solucion, nodosExpandidos, profundidadFinal, tiempo = buscar_camino_avara()
-    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
-    if flag:
-        etiqueta_costo.destroy()  # Eliminar el Label existente
-        flag = Flase
-    imprimir()"""
+    global etiqueta_costo
+    global flag
+    solucion, nodosExpandidos, profundidadFinal, tiempo, costo = busqueda_Avara(matrizInicial)
+    if not flag:
+        if etiqueta_costo is not None:
+            etiqueta_costo.config(text='Costo de la solución: ' + str(costo))
+        else:
+            etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
+            etiqueta_costo.pack()
+        flag = True
+    actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
+    imprimir()
 
 # Actualizar los valores de las etiquetas (sin costo)
 def actualizarValoresSinCosto(expand, prof, tiem):
@@ -157,8 +161,8 @@ def crear_botones():
     btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
     btn_a_estrella.pack(side='left', padx=5)
     
-    """btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
-    btn_voraz.pack(side='left', padx=5)"""
+    btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
+    btn_voraz.pack(side='left', padx=5)
 
 def cerrar_programa():
     ventana.destroy()
