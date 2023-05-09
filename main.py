@@ -38,9 +38,121 @@ def imprimir():
         ventana.update()
         time.sleep(0.5)
 
+def busqueda_anchura():
+    global solucion
+    solucion, nodosExpandidos, profundidadFinal, tiempo = busqueda_amplitud(matrizInicial)
+    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
+    if flag:
+        etiqueta_costo.destroy()  # Eliminar el Label existente
+    imprimir()
+    
+"""def busqueda_profundidad():
+    global solucion
+    solucion = buscar_camino_profundidad()
+    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
+    if flag:
+        etiqueta_costo.destroy()  # Eliminar el Label existente
+    
+def busqueda_costo_uniforme():
+    global solucion
+    solucion = buscar_camino_costo_uniforme()
+    actualizarValores(nodosExpandidos, profundidadFinal, tiempo)
+    if !flag:
+        etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
+        etiqueta_costo.pack()
+    
+def busqueda_a_estrella():
+    global solucion
+    solucion = buscar_camino_a_estrella()
+    actualizarValores(nodosExpandidos, profundidadFinal, tiempo)
+    if !flag:
+        etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
+        etiqueta_costo.pack()
+    
+def busqueda_avara():
+    global solucion
+    solucion = buscar_camino_avara()
+    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
+    if flag:
+        etiqueta_costo.destroy()  # Eliminar el Label existente"""
+
+# Actualizar los valores de las etiquetas (sin costo)
+def actualizarValoresSinCosto(expand, prof, tiem):
+    etiqueta_nodos.config(text='Nodos expandidos: ' + str(expand))
+    etiqueta_profundidad.config(text='Profundidad de la solución: ' + str(prof))
+    etiqueta_tiempo.config(text='Tiempo de la solución: ' + str(tiem))
+    
+# Actualizar los valores de las etiquetas
+def actualizarValores(expand, prof, tiem, cost):
+    etiqueta_nodos.config(text='Nodos expandidos: ' + str(expand))
+    etiqueta_profundidad.config(text='Profundidad de la solución: ' + str(prof))
+    etiqueta_tiempo.config(text='Tiempo de la solución: ' + str(tiem))
+    etiqueta_costo.config(text='Costo de la solución: ' + str(cost))
+
+def cargar_mapa():
+    global matrizInicial
+    global solucion
+
+    archivo = eg.fileopenbox(msg='Seleccione el nuevo mapa',
+                            title='Seleccion de mapa',
+                            multiple=False)
+
+    if archivo is not None:
+        mapa = open(archivo, 'r')
+        matrizInicial = np.loadtxt(mapa, dtype='i', delimiter=' ')
+        mapa.close()
+
+        # Limpiar la solución anterior
+        solucion = []
+
+        # Dibujar el nuevo mapa en el lienzo
+        draw_map(canvas, matrizInicial)
+
+        # Actualizar la interfaz
+        ventana.update()
+
+# Función para crear los botones
+def crear_botones():
+    botones = tk.Frame(ventana)
+    botones.pack(side='bottom', pady=10)
+
+    btn_anchura = tk.Button(botones, text='Búsqueda por Amplitud', command=busqueda_anchura)
+    btn_anchura.pack(side='left', padx=5)
+    
+    """btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_profundidad)
+    btn_profundidad.pack(side='left', padx=5)
+    
+    btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
+    btn_costo_uniforme.pack(side='left', padx=5)
+    
+    btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
+    btn_a_estrella.pack(side='left', padx=5)
+    
+    btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
+    btn_voraz.pack(side='left', padx=5)"""
+
+flag = True
+
+def cerrar_programa():
+    ventana.destroy()
+
 # Crear la ventana
 ventana = tk.Tk()
 ventana.title("Mapa")
+ventana.resizable(False, False)  # Desactivar la redimensión de la ventana
+# Cambiar el color de fondo de la ventana a azul
+ventana.configure(bg="white")
+
+# Crear el contenedor para los botones
+contenedor_botones = tk.Frame(ventana)
+contenedor_botones.pack(side='top', padx=5, pady=5)
+# Boton "Cargar Nuevo Mapa"
+btn_cargar_mapa = tk.Button(contenedor_botones, text='Cargar Nuevo Mapa', command=cargar_mapa, bg="gray")
+btn_cargar_mapa.pack(side='left', padx=(0, 200))
+# Crear el botón "Cerrar"
+btn_cerrar = tk.Button(contenedor_botones, text="Cerrar", command=cerrar_programa, bg="red")
+btn_cerrar.pack(side="left", padx=(200, 0))
+
 
 # Crear el canvas para dibujar el mapa
 CELL_SIZE = 50
@@ -85,50 +197,19 @@ images = {
     6: img_esfera,
 }
 
-def busqueda_anchura():
-    global solucion
-    solucion = busqueda_amplitud(matrizInicial)
-    imprimir()
-    
-"""def busqueda_profundidad():
-    global solucion
-    solucion = buscar_camino_profundidad()
-    
-def busqueda_costo_uniforme():
-    global solucion
-    solucion = buscar_camino_costo_uniforme()
-    
-def busqueda_a_estrella():
-    global solucion
-    solucion = buscar_camino_a_estrella()
-    
-def busqueda_avara():
-    global solucion
-    solucion = buscar_camino_avara()"""
-
-# Función para crear los botones
-def crear_botones():
-    botones = tk.Frame(ventana)
-    botones.pack(side='bottom', pady=10)
-
-    btn_anchura = tk.Button(botones, text='Búsqueda en Anchura', command=busqueda_anchura)
-    btn_anchura.pack(side='left', padx=5)
-    
-    """btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_profundidad)
-    btn_profundidad.pack(side='left', padx=5)
-    
-    btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
-    btn_costo_uniforme.pack(side='left', padx=5)
-    
-    btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
-    btn_a_estrella.pack(side='left', padx=5)
-    
-    btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
-    btn_voraz.pack(side='left', padx=5)"""
-
-# Llamar a la función para crear los botones
+# Crear etiquetas para mostrar los valores
+etiqueta_nodos = tk.Label(ventana, text='Nodos expandidos: ')
+etiqueta_nodos.pack()
+etiqueta_profundidad = tk.Label(ventana, text='Profundidad de la solución: ')
+etiqueta_profundidad.pack()
+etiqueta_tiempo = tk.Label(ventana, text='Tiempo de la solución: ')
+etiqueta_tiempo.pack()
+etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
+etiqueta_costo.pack()
 
 solucion = []
+
+crear_botones()
 
 archivo = eg.fileopenbox(msg='Seleccione el mapa',
                         title='Seleccion de mapa',
@@ -139,7 +220,6 @@ mapa = open(archivo, 'r')
 matrizInicial = np.loadtxt(mapa, dtype='i', delimiter=' ')
 
 draw_map(canvas, matrizInicial)
-crear_botones()
 
 for i in range(len(images)-1):
     images.pop(i)

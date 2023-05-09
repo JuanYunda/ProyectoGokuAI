@@ -4,12 +4,15 @@ import matplotlib.pyplot as plt
 import copy
 from classNodo import Nodo
 import subprocess
+import time
 
 def busqueda_amplitud(mapa):
     
     profundidadFinal = 0
     colaDeNodos = deque()
-    goku_row, goku_col = 0, 0   
+    inicio = time.time()
+    goku_row, goku_col = 0, 0 
+    cantidadDeNodosExpandidos = 0  
 
     for i in range(len(mapa)):
       for j in range(len(mapa[i])):
@@ -22,6 +25,7 @@ def busqueda_amplitud(mapa):
     #a=0
     while(True):
       resultado = nodo
+      cantidadDeNodosExpandidos += 1
 
       if nodo.getEsferas()==2:
         profundidadFinal = nodo.getProfundidad()
@@ -79,6 +83,7 @@ def busqueda_amplitud(mapa):
       solucion.append(resultado.getMapa())
       resultado = resultado.getPadre()
     print("solución registrada")
+    fin = time.time()
 
     solucion.append(mapa)
 
@@ -88,7 +93,11 @@ def busqueda_amplitud(mapa):
 
     print("profundidad de la solucion:", profundidadFinal)
 
-    return solucion
+    print("Cantidad de nodos expandidos:", cantidadDeNodosExpandidos)
+    print("profundidad de la solucion:", profundidadFinal)
+    print("El tiempo tomado es de:", fin - inicio)
+
+    return solucion, cantidadDeNodosExpandidos, profundidadFinal, fin - inicio
 
     #subprocess.Popen(["python", "GUI.py"])
 
