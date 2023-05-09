@@ -91,12 +91,6 @@ def busqueda_amplitud(mapa):
       plt.imshow(i.getMapa(), cmap='hot', interpolation='nearest')
       plt.show()""" 
 
-    print("profundidad de la solucion:", profundidadFinal)
-
-    print("Cantidad de nodos expandidos:", cantidadDeNodosExpandidos)
-    print("profundidad de la solucion:", profundidadFinal)
-    print("El tiempo tomado es de:", fin - inicio)
-
     return solucion, cantidadDeNodosExpandidos, profundidadFinal, fin - inicio
 
     #subprocess.Popen(["python", "GUI.py"])

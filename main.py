@@ -1,9 +1,12 @@
 import tkinter as tk
 from busqueda_amplitud import busqueda_amplitud
+from busqueda_AStar import busqueda_A_Star
 import time
 from PIL import Image, ImageTk
 import easygui as eg
 import numpy as np
+
+flag = True
 
 # Función para dibujar el mapa en la ventana
 def draw_map(canvas, map_data):
@@ -40,41 +43,63 @@ def imprimir():
 
 def busqueda_anchura():
     global solucion
+    global flag
+    global etiqueta_costo
     solucion, nodosExpandidos, profundidadFinal, tiempo = busqueda_amplitud(matrizInicial)
-    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
     if flag:
-        etiqueta_costo.destroy()  # Eliminar el Label existente
+        if etiqueta_costo is not None:
+            etiqueta_costo.destroy()
+        etiqueta_costo = None
+        flag = False
+    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
     imprimir()
+
     
 """def busqueda_profundidad():
     global solucion
-    solucion = buscar_camino_profundidad()
-    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
+    solucion, nodosExpandidos, profundidadFinal, tiempo = buscar_camino_profundidad()
     if flag:
         etiqueta_costo.destroy()  # Eliminar el Label existente
+        flag = Flase
+    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
+    imprimir()
     
 def busqueda_costo_uniforme():
     global solucion
-    solucion = buscar_camino_costo_uniforme()
-    actualizarValores(nodosExpandidos, profundidadFinal, tiempo)
+    solucion, nodosExpandidos, profundidadFinal, tiempo, costo = buscar_camino_costo_uniforme()
     if !flag:
         etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
         etiqueta_costo.pack()
+        flag = True
+    actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
+    imprimir()"""
     
 def busqueda_a_estrella():
     global solucion
-    solucion = buscar_camino_a_estrella()
-    actualizarValores(nodosExpandidos, profundidadFinal, tiempo)
-    if !flag:
-        etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
-        etiqueta_costo.pack()
-    
+    global etiqueta_costo
+    global flag
+    solucion, nodosExpandidos, profundidadFinal, tiempo, costo = busqueda_A_Star(matrizInicial)
+    if not flag:
+        if etiqueta_costo is not None:
+            etiqueta_costo.config(text='Costo de la solución: ' + str(costo))
+        else:
+            etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
+            etiqueta_costo.pack()
+        flag = True
+    actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
+    imprimir()
+
+
+
+"""    
 def busqueda_avara():
     global solucion
-    solucion = buscar_camino_avara()
+    solucion, nodosExpandidos, profundidadFinal, tiempo = buscar_camino_avara()
     actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
     if flag:
-        etiqueta_costo.destroy()  # Eliminar el Label existente"""
+        etiqueta_costo.destroy()  # Eliminar el Label existente
+        flag = Flase
+    imprimir()"""
 
 # Actualizar los valores de las etiquetas (sin costo)
 def actualizarValoresSinCosto(expand, prof, tiem):
@@ -123,15 +148,13 @@ def crear_botones():
     btn_profundidad.pack(side='left', padx=5)
     
     btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
-    btn_costo_uniforme.pack(side='left', padx=5)
+    btn_costo_uniforme.pack(side='left', padx=5)"""
     
     btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
     btn_a_estrella.pack(side='left', padx=5)
     
-    btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
+    """btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
     btn_voraz.pack(side='left', padx=5)"""
-
-flag = True
 
 def cerrar_programa():
     ventana.destroy()
