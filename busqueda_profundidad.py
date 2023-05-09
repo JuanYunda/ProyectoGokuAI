@@ -4,6 +4,7 @@ import copy
 from classNodo import Nodo
 import numpy as np 
 import subprocess
+import time
 
 #La busqueda por profundidad se caracteriza por agregar los nuevos nodos a la izquierda del arreglo en lugar de la derecha. 
 #Tomará estos nodos primero y los recorrerá
@@ -15,7 +16,7 @@ def busqueda_profundidad(mapa):
     colaDeNodos = deque()
     goku_row, goku_col = 0, 0
     nodosObtenidos = 0  
-
+    inicio = time.time()
     #Me recorre todo el mapa para encontrar la posición inicial
     for i in range(len(mapa)):
       for j in range(len(mapa[i])):
@@ -98,8 +99,5 @@ def busqueda_profundidad(mapa):
       resultado = resultado.getPadre()
 
     solucion.append(mapa)
-
-    print("La profundidad de la solución: ", profundidadFinal)
-    print("La cantidad de nodos obtenidos al final son: ", nodosObtenidos)
-
-    return solucion
+    fin = time.time()
+    return solucion, nodosObtenidos, profundidadFinal, fin-inicio
