@@ -119,9 +119,4 @@ def busqueda_costo(mapa):
   solucion.append(mapa)
   print("solución registrada")
 
-  print("Cantidad de nodos expandidos:", cantidadDeNodosExpandidos)
-  print("profundidad de la solucion:", profundidadFinal)
-  print("El tiempo tomado es de:", fin - inicio)
-  print("Costo de la solución:", costoFinal)
-
-  return solucion
+  return solucion, cantidadDeNodosExpandidos, profundidadFinal, fin - inicio, costoFinal
