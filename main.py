@@ -5,6 +5,7 @@ import time
 from PIL import Image, ImageTk
 import easygui as eg
 import numpy as np
+from busqueda_costo import busqueda_costo 
 
 flag = True
 
@@ -183,13 +184,13 @@ canvas = tk.Canvas(ventana, width=500, height=500, bg='gray')
 canvas.pack()
 
 # Cargar las imágenes que deseas mostrar en la interfaz
-img_camino = Image.open('camino.png') #camino
-img_muro = Image.open('muro.png') #paredes
-img_goku = Image.open('goku.png') #goku
-img_freezer = Image.open('freezer.png') #freezer
-img_cell = Image.open('cell.png') #cell
-img_semilla = Image.open('semilla.png') #semilla
-img_esfera = Image.open('esfera.png') #esfera
+img_camino = Image.open('images/camino.png') #camino
+img_muro = Image.open('images/muro.png') #paredes
+img_goku = Image.open('images/goku.png') #goku
+img_freezer = Image.open('images/freezer.png') #freezer
+img_cell = Image.open('images/cell.png') #cell
+img_semilla = Image.open('images/semilla.png') #semilla
+img_esfera = Image.open('images/esfera.png') #esfera
     
 # Escalar las imágenes a la dimensión de las celdas
 img_camino = img_camino.resize((CELL_SIZE, CELL_SIZE), Image.LANCZOS)
