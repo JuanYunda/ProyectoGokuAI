@@ -148,7 +148,7 @@ class NodoAvara:
 
   def getH(self):
     return self.heuristica
-
+  
   #metodos set
 
   def setEsferas(self, cantidad):
