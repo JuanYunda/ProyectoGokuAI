@@ -4,6 +4,7 @@ import time
 from PIL import Image, ImageTk
 import easygui as eg
 import numpy as np
+from busqueda_costo import busqueda_costo 
 
 # Función para dibujar el mapa en la ventana
 def draw_map(canvas, map_data):
@@ -48,13 +49,13 @@ canvas = tk.Canvas(ventana, width=500, height=500, bg='gray')
 canvas.pack()
 
 # Cargar las imágenes que deseas mostrar en la interfaz
-img_camino = Image.open('camino.png') #camino
-img_muro = Image.open('muro.png') #paredes
-img_goku = Image.open('goku.png') #goku
-img_freezer = Image.open('freezer.png') #freezer
-img_cell = Image.open('cell.png') #cell
-img_semilla = Image.open('semilla.png') #semilla
-img_esfera = Image.open('esfera.png') #esfera
+img_camino = Image.open('images/camino.png') #camino
+img_muro = Image.open('images/muro.png') #paredes
+img_goku = Image.open('images/goku.png') #goku
+img_freezer = Image.open('images/freezer.png') #freezer
+img_cell = Image.open('images/cell.png') #cell
+img_semilla = Image.open('images/semilla.png') #semilla
+img_esfera = Image.open('images/esfera.png') #esfera
     
 # Escalar las imágenes a la dimensión de las celdas
 img_camino = img_camino.resize((CELL_SIZE, CELL_SIZE), Image.LANCZOS)
@@ -89,6 +90,11 @@ def busqueda_anchura():
     global solucion
     solucion = busqueda_amplitud(matrizInicial)
     imprimir()
+
+def busqueda_con_costo():
+    global solucion
+    solucion = busqueda_costo(matrizInicial)
+    imprimir()
     
 """def busqueda_profundidad():
     global solucion
@@ -111,14 +117,15 @@ def crear_botones():
     botones = tk.Frame(ventana)
     botones.pack(side='bottom', pady=10)
 
-    btn_anchura = tk.Button(botones, text='Búsqueda en Anchura', command=busqueda_anchura)
+    btn_anchura = tk.Button(botones, text='Búsqueda en Amplitud', command=busqueda_anchura)
     btn_anchura.pack(side='left', padx=5)
+
+    btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_con_costo)
+    btn_costo_uniforme.pack(side='left', padx=5)
     
     """btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_profundidad)
     btn_profundidad.pack(side='left', padx=5)
     
-    btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
-    btn_costo_uniforme.pack(side='left', padx=5)
     
     btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
     btn_a_estrella.pack(side='left', padx=5)
