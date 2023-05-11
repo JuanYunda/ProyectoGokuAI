@@ -63,17 +63,22 @@ def busqueda_anchura():
         etiqueta_costo.destroy()  # Eliminar el Label existente
         flag = Flase
     actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
-    imprimir()
+    imprimir()"""
     
 def busqueda_costo_uniforme():
     global solucion
-    solucion, nodosExpandidos, profundidadFinal, tiempo, costo = buscar_camino_costo_uniforme()
-    if !flag:
-        etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
-        etiqueta_costo.pack()
+    global etiqueta_costo
+    global flag
+    solucion, nodosExpandidos, profundidadFinal, tiempo, costo = busqueda_costo(matrizInicial)
+    if not flag:
+        if etiqueta_costo is not None:
+            etiqueta_costo.config(text='Costo de la solución: ' + str(costo))
+        else:
+            etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
+            etiqueta_costo.pack()
         flag = True
     actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
-    imprimir()"""
+    imprimir()
     
 def busqueda_a_estrella():
     global solucion
@@ -146,10 +151,10 @@ def crear_botones():
     btn_anchura.pack(side='left', padx=5)
     
     """btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_profundidad)
-    btn_profundidad.pack(side='left', padx=5)
+    btn_profundidad.pack(side='left', padx=5)"""
     
     btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
-    btn_costo_uniforme.pack(side='left', padx=5)"""
+    btn_costo_uniforme.pack(side='left', padx=5)
     
     btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
     btn_a_estrella.pack(side='left', padx=5)
