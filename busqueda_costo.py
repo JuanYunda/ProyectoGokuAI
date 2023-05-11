@@ -127,7 +127,6 @@ def busqueda_costo(mapa):
     while resultado.getPadre() != None:
         solucion.append(resultado.getMapa())
         resultado = resultado.getPadre()
-        print(resultado.getCosto())
     print("solución registrada")
     fin = time.time()
     solucion.append(mapa)
