@@ -8,7 +8,7 @@ class NodoAvara:
   #  self.esferas = cuantas esferas tiene goku
   #  self.anterior_row, self.anterior_col = posicion previa de Goku
     
-  def __init__(self, padre, mapaActual, profundidad, goku_row, goku_col, movimientoAnterior):
+  def __init__(self, padre, mapaActual, profundidad, goku_row, goku_col, movimientoAnterior, h1Obtenido, h2Obtenido):
     self.mapa = mapaActual
     self.padre = padre
     self.profundidad = profundidad
@@ -20,6 +20,8 @@ class NodoAvara:
     self.movimientoAnterior = movimientoAnterior
     self.ultimaCasilla = 0
     self.heuristica, self.h1, self.h2 = 0,0,0
+    self.H1Obtenida = h1Obtenido
+    self.H2Obtenida = h2Obtenido
     
   #funciones de movimiento de Goku
 
@@ -148,7 +150,18 @@ class NodoAvara:
 
   def getH(self):
     return self.heuristica
+
+  def getH1Obtenido(self):
+    return self.H1Obtenida
   
+  def getH2Obtenido(self):
+    return self.H2Obtenida
+  
+  def getH1(self):
+    return self.h1
+  
+  def getH2(self):
+    return self.h2
   #metodos set
 
   def setEsferas(self, cantidad):
@@ -164,10 +177,32 @@ class NodoAvara:
     self.semillas = cantidad
 
   def setH1(self,x,y):
-    self.h1 = np.sqrt((x-self.goku_col) ** 2 + (y-self.goku_row) ** 2)
+    if self.H1Obtenida:
+      self.h1 = 0
+    else: 
+      self.h1 = np.sqrt((x-self.goku_col) ** 2 + (y-self.goku_row) ** 2)
 
   def setH2(self,x,y):
-    self.h2 = np.sqrt((x-self.goku_col) ** 2 + (y-self.goku_row) ** 2)
+    if self.H2Obtenida:
+      self.h2 = 0
+    else: 
+      self.h2 = np.sqrt((x-self.goku_col) ** 2 + (y-self.goku_row) ** 2)
+
+  def setH1Obtenido(self):
+    self.H1Obtenida = True
+  
+  def setH2Obtenido(self):
+    self.H2Obtenida = True
 
   def setH(self):
-    self.heuristica = self.h1+self.h2
+    if(self.H1Obtenida):
+      self.heuristica = self.h2
+      return None
+    elif(self.H2Obtenida):
+      self.heuristica = self.h1
+      return None
+
+    if(self.h1 >= self.h2):
+      self.heuristica = self.h2
+    else:
+      self.heuristica = self.h1
