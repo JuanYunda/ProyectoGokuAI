@@ -1,6 +1,9 @@
 import tkinter as tk
 from busqueda_amplitud import busqueda_amplitud
+from busqueda_profundidad import busqueda_profundidad
 from busqueda_AStar import busqueda_A_Star
+from busqueda_Avara import busqueda_Avara
+from busqueda_costo import busqueda_costo
 import time
 from PIL import Image, ImageTk
 import easygui as eg
@@ -56,14 +59,17 @@ def busqueda_anchura():
     imprimir()
 
     
-"""def busqueda_profundidad():
+def busqueda_de_profundidad():
     global solucion
-    solucion, nodosExpandidos, profundidadFinal, tiempo = buscar_camino_profundidad()
+    global flag
+    global etiqueta_costo
+    solucion, nodosExpandidos, profundidadFinal, tiempo = busqueda_profundidad(matrizInicial)
     if flag:
-        etiqueta_costo.destroy()  # Eliminar el Label existente
-        flag = Flase
+        if etiqueta_costo is not None:
+            etiqueta_costo.destroy()  # Eliminar el Label existente
+        flag = False
     actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
-    imprimir()"""
+    imprimir()
     
 def busqueda_costo_uniforme():
     global solucion
@@ -94,18 +100,21 @@ def busqueda_a_estrella():
         flag = True
     actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
     imprimir()
-
-
-
-"""    
+  
 def busqueda_avara():
     global solucion
-    solucion, nodosExpandidos, profundidadFinal, tiempo = buscar_camino_avara()
-    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
-    if flag:
-        etiqueta_costo.destroy()  # Eliminar el Label existente
-        flag = Flase
-    imprimir()"""
+    global etiqueta_costo
+    global flag
+    solucion, nodosExpandidos, profundidadFinal, tiempo, costo = busqueda_Avara(matrizInicial)
+    if not flag:
+        if etiqueta_costo is not None:
+            etiqueta_costo.config(text='Costo de la solución: ' + str(costo))
+        else:
+            etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
+            etiqueta_costo.pack()
+        flag = True
+    actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
+    imprimir()
 
 # Actualizar los valores de las etiquetas (sin costo)
 def actualizarValoresSinCosto(expand, prof, tiem):
@@ -150,17 +159,17 @@ def crear_botones():
     btn_anchura = tk.Button(botones, text='Búsqueda por Amplitud', command=busqueda_anchura)
     btn_anchura.pack(side='left', padx=5)
     
-    """btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_profundidad)
-    btn_profundidad.pack(side='left', padx=5)"""
-    
     btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
     btn_costo_uniforme.pack(side='left', padx=5)
+
+    btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_de_profundidad)
+    btn_profundidad.pack(side='left', padx=5)
     
     btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
     btn_a_estrella.pack(side='left', padx=5)
     
-    """btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
-    btn_voraz.pack(side='left', padx=5)"""
+    btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
+    btn_voraz.pack(side='left', padx=5)
 
 def cerrar_programa():
     ventana.destroy()
