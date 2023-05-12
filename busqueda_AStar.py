@@ -32,11 +32,9 @@ def busqueda_A_Star(mapa):
     nodo = nodoRaiz
     cantidadDeNodosExpandidos = 0
     costoFinal = 0
-    heuristicaInicial = 0
     nodo.setH1(esf1_col, esf1_row)
     nodo.setH2(esf2_col,esf2_row)
     nodo.setH()
-    heuristicaInicial = nodo.getH()
     # a=0
     while (True):
         resultado = nodo

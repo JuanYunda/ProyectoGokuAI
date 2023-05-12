@@ -215,5 +215,3 @@ class NodoAStar:
       self.heuristica = self.h2
     else:
       self.heuristica = self.h1
-    #self.heuristica = self.h1+self.h2
-    #self.heuristica = (self.h1 + self.h2)/2
