@@ -65,6 +65,7 @@ def busqueda_de_profundidad():
     if flag:
         if etiqueta_costo is not None:
             etiqueta_costo.destroy()  # Eliminar el Label existente
+        etiqueta_costo = None
         flag = False
     actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
     imprimir()
