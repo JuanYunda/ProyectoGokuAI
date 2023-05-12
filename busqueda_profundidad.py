@@ -100,7 +100,6 @@ def busqueda_profundidad(mapa):
             nuevoNodo.move_up()
             colaDeNodos.appendleft(nuevoNodo)
 
-        print(nodo.getMapa())
         nodo = colaDeNodos.popleft()
         left, right, up, down = True, True, True, True
         flagCiclo = False
