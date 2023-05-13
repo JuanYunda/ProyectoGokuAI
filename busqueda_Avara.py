@@ -29,7 +29,6 @@ def busqueda_Avara(mapa):
     nodoRaiz = NodoAvara(None, mapa, 0, goku_row, goku_col, "", False, False)
     nodo = nodoRaiz
     cantidadDeNodosExpandidos = 0
-    costoFinal = 0
     # a=0
     nodo.setH1(esf1_col, esf1_row)
     nodo.setH2(esf2_col, esf2_row)
@@ -47,7 +46,6 @@ def busqueda_Avara(mapa):
 
         if nodo.getEsferas() == 2:
             profundidadFinal = nodo.getProfundidad()
-            costoFinal = nodo.getCosto()
             resultado = nodo
             break
 
@@ -76,7 +74,6 @@ def busqueda_Avara(mapa):
                     copiaMapa1 = copy.deepcopy(nodo.getMapa())
                     nuevoNodo = NodoAvara(nodo, copiaMapa1, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
-                    nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
                     nuevoNodo.move_right()
@@ -90,7 +87,6 @@ def busqueda_Avara(mapa):
                     copiaMapa2 = copy.deepcopy(nodo.getMapa())
                     nuevoNodo = NodoAvara(nodo, copiaMapa2, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
-                    nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
                     nuevoNodo.move_left()
@@ -104,7 +100,6 @@ def busqueda_Avara(mapa):
                     copiaMapa3 = copy.deepcopy(nodo.getMapa())
                     nuevoNodo = NodoAvara(nodo, copiaMapa3, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
-                    nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
                     nuevoNodo.move_down()
@@ -118,7 +113,6 @@ def busqueda_Avara(mapa):
                     copiaMapa4 = copy.deepcopy(nodo.getMapa())
                     nuevoNodo = NodoAvara(nodo, copiaMapa4, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
-                    nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
                     nuevoNodo.move_up()
@@ -143,4 +137,4 @@ def busqueda_Avara(mapa):
     fin = time.time()
 
     solucion.append(mapa)
-    return solucion, cantidadDeNodosExpandidos, profundidadFinal, fin - inicio, costoFinal
+    return solucion, cantidadDeNodosExpandidos, profundidadFinal, fin - inicio

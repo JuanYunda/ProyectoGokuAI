@@ -106,15 +106,13 @@ def busqueda_avara():
     global solucion
     global etiqueta_costo
     global flag
-    solucion, nodosExpandidos, profundidadFinal, tiempo, costo = busqueda_Avara(matrizInicial)
-    if not flag:
+    solucion, nodosExpandidos, profundidadFinal, tiempo = busqueda_Avara(matrizInicial)
+    if flag:
         if etiqueta_costo is not None:
-            etiqueta_costo.config(text='Costo de la solución: ' + str(costo))
-        else:
-            etiqueta_costo = tk.Label(ventana, text='Costo de la solución: ')
-            etiqueta_costo.pack()
-        flag = True
-    actualizarValores(nodosExpandidos, profundidadFinal, tiempo, costo)
+            etiqueta_costo.destroy()  # Eliminar el Label existente
+        etiqueta_costo = None
+        flag = False
+    actualizarValoresSinCosto(nodosExpandidos, profundidadFinal, tiempo)
     imprimir()
 
 # Actualizar los valores de las etiquetas (sin costo)
