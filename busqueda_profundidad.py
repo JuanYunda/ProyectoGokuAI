@@ -6,6 +6,12 @@ import numpy as np
 import subprocess
 import time
 
+#ProyectoGokuAI
+#Elaborado por:
+#Mauricio Carrillo - 2024092
+#Juan Esteban Mazuera - 2043008
+#Sheilly Ortega - 2040051
+
 #La busqueda por profundidad se caracteriza por agregar los nuevos nodos a la izquierda del arreglo en lugar de la derecha. 
 #Tomará estos nodos primero y los recorrerá
 def busqueda_profundidad(mapa):

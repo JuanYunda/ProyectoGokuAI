@@ -11,6 +11,12 @@ import easygui as eg
 import numpy as np
 from busqueda_costo import busqueda_costo 
 
+#ProyectoGokuAI
+#Elaborado por:
+#Mauricio Carrillo - 2024092
+#Juan Esteban Mazuera - 2043008
+#Sheilly Ortega - 2040051
+
 botones = None
 flag = True
 global tipo_busqueda

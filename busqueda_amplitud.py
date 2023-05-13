@@ -6,6 +6,12 @@ from classNodo import Nodo
 import subprocess
 import time
 
+#ProyectoGokuAI
+#Elaborado por:
+#Mauricio Carrillo - 2024092
+#Juan Esteban Mazuera - 2043008
+#Sheilly Ortega - 2040051
+
 def busqueda_amplitud(mapa):
     
     profundidadFinal = 0

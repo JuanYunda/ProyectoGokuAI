@@ -1,3 +1,9 @@
+#ProyectoGokuAI
+#Elaborado por:
+#Mauricio Carrillo - 2024092
+#Juan Esteban Mazuera - 2043008
+#Sheilly Ortega - 2040051
+
 class Nodo:
   # ESTADO:
   #  self.padre = el padre de un nodo
