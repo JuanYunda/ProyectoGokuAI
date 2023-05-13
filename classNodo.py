@@ -16,18 +16,9 @@ class Nodo:
     self.esferas = 0
     self.movimientoAnterior = movimientoAnterior
     self.ultimaCasilla = 0
+    self.semillas = 0
   #funciones de movimiento de Goku
 
-  """ef move_right(self):
-      #Revisar si en la posicion a la que se va a mover hay una esfera
-      if(self.mapa[self.goku_row][self.goku_col+1]==6):
-        self.setEsferas(self.esferas+1)
-        self.movimientoAnterior=""
-      self.mapa[self.goku_row][self.goku_col] = 0
-      self.mapa[self.goku_row][self.goku_col+1] = 2
-      self.goku_col = self.goku_col+1
-      #print("se mueve derecha")
-"""
   def move_right(self):
       #Revisar si en la posicion a la que se va a mover hay una esfera
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
@@ -82,19 +73,28 @@ class Nodo:
       #print("se mueve abajo")
 
   def recordar_enemigos(self, fila, columna):
-
+    #Revisar si obtuve una semilla
+    if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 5):
+        self.aumentarSemillas(1)
     #si hay un freezer
     if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 3):
-      self.setUltimaCasilla(3)
-    else:
-      self.setUltimaCasilla(0)
-
+      if self.semillas == 0:
+        self.setUltimaCasilla(3)
+      else:
+        self.aumentarSemillas(-1)
+        self.setUltimaCasilla(0)
     #si hay un cell
-    if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
-      self.setUltimaCasilla(4)
+    elif (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
+      if self.semillas == 0:
+        self.setUltimaCasilla(4)
+      else:
+        self.aumentarSemillas(-1)
+        self.setUltimaCasilla(0)
     else:
       self.setUltimaCasilla(0)
 
+  def aumentarSemillas(self, cantidad):
+    self.semillas += cantidad
   #metodos get
 
   def getPadre(self):
@@ -120,7 +120,9 @@ class Nodo:
 
   def getUltimaCasilla(self):
     return self.ultimaCasilla
-
+  
+  def getSemillas(self):
+    return self.semillas
   #metodos set
 
   def setEsferas(self, cantidad):
@@ -129,6 +131,9 @@ class Nodo:
 
   def setUltimaCasilla(self, cantidad):
     self.ultimaCasilla = cantidad
+
+  def setSemillas(self, cantidad):
+    self.semillas = cantidad
 
   
 

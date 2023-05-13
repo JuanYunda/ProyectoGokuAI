@@ -1,5 +1,5 @@
 import numpy as np
-class NodoAStar:
+class NodoInformada:
   # ESTADO:
   #  self.padre = el padre de un nodo
   #  self.mapa = estado del mapa actualmente
@@ -101,11 +101,9 @@ class NodoAStar:
         costo = 0
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
-    else:
-      self.setUltimaCasilla(0)
 
     #si hay un cell y no hay semillas
-    if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
+    elif (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
       if self.semillas == 0:
         costo = 6
         self.setUltimaCasilla(4)
@@ -113,6 +111,7 @@ class NodoAStar:
         costo = 0
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
+        
     else:
       self.setUltimaCasilla(0)
 
@@ -162,7 +161,7 @@ class NodoAStar:
   def getH2(self):
     return self.h2
 
-  def getH(self):
+  def getHAStar(self):
     return self.heuristica+self.costo
   
   def getH1Obtenido(self):
@@ -170,6 +169,9 @@ class NodoAStar:
   
   def getH2Obtenido(self):
     return self.H2Obtenida
+  
+  def getHAvara(self):
+    return self.heuristica
   
   #metodos set
 

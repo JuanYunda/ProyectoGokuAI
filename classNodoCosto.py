@@ -97,11 +97,9 @@ class NodoCosto:
         costo = 0
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
-    else:
-      self.setUltimaCasilla(0)
 
     #si hay un cell y no hay semillas
-    if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
+    elif (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
       if self.semillas == 0:
         costo = 6
         self.setUltimaCasilla(4)

@@ -70,6 +70,7 @@ def busqueda_profundidad(mapa):
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
+            nuevoNodo.setSemillas(nodo.getSemillas())
             nuevoNodo.move_right()
             colaDeNodos.appendleft(nuevoNodo)
 
@@ -79,6 +80,7 @@ def busqueda_profundidad(mapa):
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
+            nuevoNodo.setSemillas(nodo.getSemillas())
             nuevoNodo.move_left()
             colaDeNodos.appendleft(nuevoNodo)
 
@@ -88,6 +90,7 @@ def busqueda_profundidad(mapa):
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
+            nuevoNodo.setSemillas(nodo.getSemillas())
             nuevoNodo.move_down()
             colaDeNodos.appendleft(nuevoNodo)
 
@@ -97,6 +100,7 @@ def busqueda_profundidad(mapa):
             nuevoNodo = Nodo(nodo, copiaMapa, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up")
             nuevoNodo.setEsferas(nodo.getEsferas())
             nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
+            nuevoNodo.setSemillas(nodo.getSemillas())
             nuevoNodo.move_up()
             colaDeNodos.appendleft(nuevoNodo)
 

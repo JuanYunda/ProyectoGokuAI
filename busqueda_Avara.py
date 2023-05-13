@@ -1,7 +1,7 @@
 from collections import deque
 import matplotlib.pyplot as plt
 import copy
-from classNodoAvara import NodoAvara
+from classNodoInformada import NodoInformada
 import subprocess
 import time
 
@@ -25,16 +25,13 @@ def busqueda_Avara(mapa):
             if mapa[i][j] == 6 and flag == 1:
                 esf2_row, esf2_col = i, j
 
-
-    nodoRaiz = NodoAvara(None, mapa, 0, goku_row, goku_col, "", False, False)
+    nodoRaiz = NodoInformada(None, mapa, 0, goku_row, goku_col, "", False, False)
     nodo = nodoRaiz
     cantidadDeNodosExpandidos = 0
-    # a=0
+
     nodo.setH1(esf1_col, esf1_row)
     nodo.setH2(esf2_col, esf2_row)
     nodo.setH()
-    print(nodo.getH1())
-    print(nodo.getH2())
     while (True):
         resultado = nodo
         cantidadDeNodosExpandidos += 1
@@ -72,7 +69,7 @@ def busqueda_Avara(mapa):
             if nodo.getGoku_col() < len(mapa[0])-1 and right:
                 if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()+1] != 1 and (nodo.getMovimientoAnterior() != "left" or nodo.getMovimientoAnterior() == ""):  # right
                     copiaMapa1 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAvara(nodo, copiaMapa1, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right", nodo.getH1Obtenido(),nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa1, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
@@ -85,7 +82,7 @@ def busqueda_Avara(mapa):
             if nodo.getGoku_col() > 0 and left:
                 if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()-1] != 1 and (nodo.getMovimientoAnterior() != "right" or nodo.getMovimientoAnterior() == ""):  # left
                     copiaMapa2 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAvara(nodo, copiaMapa2, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left", nodo.getH1Obtenido(),nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa2, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
@@ -98,7 +95,7 @@ def busqueda_Avara(mapa):
             if nodo.getGoku_row() < len(mapa)-1 and down:
                 if nodo.getMapa()[nodo.getGoku_row()+1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "up" or nodo.getMovimientoAnterior() == ""):  # down
                     copiaMapa3 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAvara(nodo, copiaMapa3, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down", nodo.getH1Obtenido(),nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa3, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
@@ -111,7 +108,7 @@ def busqueda_Avara(mapa):
             if nodo.getGoku_row() > 0 and up:
                 if nodo.getMapa()[nodo.getGoku_row()-1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "down" or nodo.getMovimientoAnterior() == ""):  # up
                     copiaMapa4 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAvara(nodo, copiaMapa4, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up", nodo.getH1Obtenido(),nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa4, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up", nodo.getH1Obtenido(),nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
@@ -121,7 +118,7 @@ def busqueda_Avara(mapa):
                     nuevoNodo.setH()
                     colaDeNodos.append(nuevoNodo)
 
-            colaHeuristica = sorted(colaDeNodos, key=NodoAvara.getH)
+            colaHeuristica = sorted(colaDeNodos, key=NodoInformada.getHAvara)
             colaDeNodos = deque(colaHeuristica)
             nodo = colaDeNodos.popleft()
             left, right, up, down = True, True, True, True

@@ -1,7 +1,7 @@
 from collections import deque
 import matplotlib.pyplot as plt
 import copy
-from classNodoAStar import NodoAStar
+from classNodoInformada import NodoInformada
 import subprocess
 import time
 
@@ -28,7 +28,7 @@ def busqueda_A_Star(mapa):
                 esf2_row, esf2_col = i, j
 
 
-    nodoRaiz = NodoAStar(None, mapa, 0, goku_row, goku_col, "", False, False)
+    nodoRaiz = NodoInformada(None, mapa, 0, goku_row, goku_col, "", False, False)
     nodo = nodoRaiz
     cantidadDeNodosExpandidos = 0
     costoFinal = 0
@@ -54,7 +54,7 @@ def busqueda_A_Star(mapa):
             if nodo.getGoku_col() < len(mapa[0])-1:
                 if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()+1] != 1 and (nodo.getMovimientoAnterior() != "left" or nodo.getMovimientoAnterior() == ""):  # right
                     copiaMapa1 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAStar(nodo, copiaMapa1, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right", nodo.getH1Obtenido(), nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa1, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "right", nodo.getH1Obtenido(), nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
@@ -68,7 +68,7 @@ def busqueda_A_Star(mapa):
             if nodo.getGoku_col() > 0:
                 if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()-1] != 1 and (nodo.getMovimientoAnterior() != "right" or nodo.getMovimientoAnterior() == ""):  # left
                     copiaMapa2 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAStar(nodo, copiaMapa2, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left", nodo.getH1Obtenido(), nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa2, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "left", nodo.getH1Obtenido(), nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
@@ -82,7 +82,7 @@ def busqueda_A_Star(mapa):
             if nodo.getGoku_row() < len(mapa)-1:
                 if nodo.getMapa()[nodo.getGoku_row()+1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "up" or nodo.getMovimientoAnterior() == ""):  # down
                     copiaMapa3 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAStar(nodo, copiaMapa3, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down", nodo.getH1Obtenido(), nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa3, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "down", nodo.getH1Obtenido(), nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
@@ -96,7 +96,7 @@ def busqueda_A_Star(mapa):
             if nodo.getGoku_row() > 0:
                 if nodo.getMapa()[nodo.getGoku_row()-1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "down" or nodo.getMovimientoAnterior() == ""):  # up
                     copiaMapa4 = copy.deepcopy(nodo.getMapa())
-                    nuevoNodo = NodoAStar(nodo, copiaMapa4, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up", nodo.getH1Obtenido(), nodo.getH2Obtenido())
+                    nuevoNodo = NodoInformada(nodo, copiaMapa4, nodo.getProfundidad()+1, nodo.getGoku_row(), nodo.getGoku_col(), "up", nodo.getH1Obtenido(), nodo.getH2Obtenido())
                     nuevoNodo.setEsferas(nodo.getEsferas())
                     nuevoNodo.setCosto(nodo.getCosto())
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
@@ -107,7 +107,7 @@ def busqueda_A_Star(mapa):
                     nuevoNodo.setH()
                     colaDeNodos.append(nuevoNodo)
 
-            colaOrdenada = sorted(colaDeNodos, key=NodoAStar.getH)
+            colaOrdenada = sorted(colaDeNodos, key=NodoInformada.getHAStar)
             colaDeNodos = deque(colaOrdenada)
             nodo = colaDeNodos.popleft()
 
