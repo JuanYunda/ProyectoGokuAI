@@ -1,4 +1,5 @@
 import tkinter as tk
+import easygui
 from busqueda_amplitud import busqueda_amplitud
 from busqueda_profundidad import busqueda_profundidad
 from busqueda_AStar import busqueda_A_Star
@@ -10,7 +11,9 @@ import easygui as eg
 import numpy as np
 from busqueda_costo import busqueda_costo 
 
+botones = None
 flag = True
+global tipo_busqueda
 
 # Función para dibujar el mapa en la ventana
 def draw_map(canvas, map_data):
@@ -136,6 +139,9 @@ def cargar_mapa():
                             title='Seleccion de mapa',
                             multiple=False)
 
+    mostrar_interfaz()
+    crear_botones()
+
     if archivo is not None:
         mapa = open(archivo, 'r')
         matrizInicial = np.loadtxt(mapa, dtype='i', delimiter=' ')
@@ -152,26 +158,47 @@ def cargar_mapa():
 
 # Función para crear los botones
 def crear_botones():
+    global botones
+
+    if botones is not None:
+        botones.destroy()
+        botones = None
+        
     botones = tk.Frame(ventana)
     botones.pack(side='bottom', pady=10)
 
-    btn_anchura = tk.Button(botones, text='Búsqueda por Amplitud', command=busqueda_anchura)
-    btn_anchura.pack(side='left', padx=5)
+    if tipo_busqueda:
+        btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
+        btn_a_estrella.pack(side='left', padx=5)
     
-    btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
-    btn_costo_uniforme.pack(side='left', padx=5)
+        btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
+        btn_voraz.pack(side='left', padx=5)
 
-    btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_de_profundidad)
-    btn_profundidad.pack(side='left', padx=5)
+    else:
+        btn_anchura = tk.Button(botones, text='Búsqueda por Amplitud', command=busqueda_anchura)
+        btn_anchura.pack(side='left', padx=5)
     
-    btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
-    btn_a_estrella.pack(side='left', padx=5)
-    
-    btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
-    btn_voraz.pack(side='left', padx=5)
+        btn_costo_uniforme = tk.Button(botones, text='Búsqueda con Costo Uniforme', command=busqueda_costo_uniforme)
+        btn_costo_uniforme.pack(side='left', padx=5)
+
+        btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_de_profundidad)
+        btn_profundidad.pack(side='left', padx=5)
 
 def cerrar_programa():
     ventana.destroy()
+
+# Función para cambiar el valor de la variable booleana global
+def cambiar_variable(valor):
+    global tipo_busqueda
+    tipo_busqueda = valor
+
+# Función para mostrar la interfaz flotante
+def mostrar_interfaz():
+    respuesta = easygui.buttonbox("Seleccione el tipo de busqueda a realizar:", choices=["Busqueda Informada", "Busqueda No Informada"])
+    if respuesta == "Busqueda Informada":
+        cambiar_variable(True)
+    else:
+        cambiar_variable(False)
 
 # Crear la ventana
 ventana = tk.Tk()
@@ -246,6 +273,7 @@ etiqueta_costo.pack()
 
 solucion = []
 
+mostrar_interfaz()
 crear_botones()
 
 archivo = eg.fileopenbox(msg='Seleccione el mapa',
