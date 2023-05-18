@@ -123,7 +123,6 @@ def busqueda_A_Star(mapa):
     while resultado.getPadre() != None:
         solucion.append(resultado.getMapa())
         resultado = resultado.getPadre()
-        print(resultado.getEsferas())
     fin = time.time()
 
     solucion.append(mapa)

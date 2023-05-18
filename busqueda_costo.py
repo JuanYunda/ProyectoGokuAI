@@ -45,7 +45,7 @@ def busqueda_costo(mapa):
          break
        for j in range(len(mapa[i])):
          if navegar.getPadre() != None:
-           if navegar.getPadre().getEsferas() != nodo.getEsferas():
+           if navegar.getPadre().getEsferas() != nodo.getEsferas() or navegar.getPadre().getMovimientoAnterior() != "empty":
              flag = True
              break
            if nodo.getGoku_row() == navegar.getPadre().getGoku_row() and nodo.getGoku_col()-1 == navegar.getPadre().getGoku_col():

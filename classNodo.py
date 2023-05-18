@@ -33,6 +33,11 @@ class Nodo:
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
 
+      elif(self.mapa[self.goku_row][self.goku_col+1]==5
+         or self.mapa[self.goku_row][self.goku_col+1]==4
+         or self.mapa[self.goku_row][self.goku_col+1]==3):
+        self.movimientoAnterior=""
+
       self.recordar_enemigos(0, 1)
 
       self.mapa[self.goku_row][self.goku_col+1] = 2
@@ -44,6 +49,12 @@ class Nodo:
       if(self.mapa[self.goku_row][self.goku_col-1]==6):
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
+        self.devolver = True
+      elif(self.mapa[self.goku_row][self.goku_col-1]==5 
+         or self.mapa[self.goku_row][self.goku_col-1]==4 
+         or self.mapa[self.goku_row][self.goku_col-1]==3):
+        self.movimientoAnterior=""
+
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
 
       self.recordar_enemigos(0, -1)
@@ -57,6 +68,12 @@ class Nodo:
       if(self.mapa[self.goku_row-1][self.goku_col]==6):
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
+
+      elif(self.mapa[self.goku_row-1][self.goku_col]==5
+         or self.mapa[self.goku_row-1][self.goku_col]==4
+         or self.mapa[self.goku_row-1][self.goku_col]==3):
+        self.movimientoAnterior=""
+        
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
 
       self.recordar_enemigos(-1, 0)
@@ -70,6 +87,11 @@ class Nodo:
       if(self.mapa[self.goku_row+1][self.goku_col]==6):
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
+      elif(self.mapa[self.goku_row+1][self.goku_col]==5
+         or self.mapa[self.goku_row+1][self.goku_col]==4
+         or self.mapa[self.goku_row+1][self.goku_col]==3):
+        self.movimientoAnterior=""
+
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
 
       self.recordar_enemigos(1, 0)
@@ -129,6 +151,7 @@ class Nodo:
   
   def getSemillas(self):
     return self.semillas
+
   #metodos set
 
   def setEsferas(self, cantidad):
@@ -140,6 +163,7 @@ class Nodo:
 
   def setSemillas(self, cantidad):
     self.semillas = cantidad
+
 
   
 
