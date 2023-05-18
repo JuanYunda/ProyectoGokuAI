@@ -35,6 +35,11 @@ class NodoCosto:
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
 
+      elif(self.mapa[self.goku_row][self.goku_col+1]==5
+           or self.mapa[self.goku_row][self.goku_col+1]==4
+           or self.mapa[self.goku_row][self.goku_col+1]==3):
+        self.movimientoAnterior=""
+
       self.funcion_costo(0, 1)
 
       self.mapa[self.goku_row][self.goku_col+1] = 2
@@ -46,6 +51,12 @@ class NodoCosto:
       if(self.mapa[self.goku_row][self.goku_col-1]==6):
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
+
+      elif(self.mapa[self.goku_row][self.goku_col-1]==5
+           or self.mapa[self.goku_row][self.goku_col-1]==4
+           or self.mapa[self.goku_row][self.goku_col-1]==3):
+        self.movimientoAnterior=""
+
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
 
       self.funcion_costo(0, -1)
@@ -59,6 +70,12 @@ class NodoCosto:
       if(self.mapa[self.goku_row-1][self.goku_col]==6):
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
+
+      elif(self.mapa[self.goku_row-1][self.goku_col]==5
+           or self.mapa[self.goku_row-1][self.goku_col]==4
+           or self.mapa[self.goku_row-1][self.goku_col]==3):
+        self.movimientoAnterior=""
+
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
 
       self.funcion_costo(-1, 0)
@@ -72,6 +89,12 @@ class NodoCosto:
       if(self.mapa[self.goku_row+1][self.goku_col]==6):
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
+
+      elif(self.mapa[self.goku_row+1][self.goku_col]==5
+           or self.mapa[self.goku_row+1][self.goku_col]==4
+           or self.mapa[self.goku_row+1][self.goku_col]==3):
+        self.movimientoAnterior=""
+
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
 
       self.funcion_costo(1, 0)
