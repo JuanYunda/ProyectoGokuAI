@@ -24,6 +24,7 @@ class NodoCosto:
     self.costo = 0
     self.movimientoAnterior = movimientoAnterior
     self.ultimaCasilla = 0
+    self.enemigosEncontrados = 0
     
   #funciones de movimiento de Goku
 
@@ -95,33 +96,32 @@ class NodoCosto:
     costo=0
     
     if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 5):
-        self.aumentarSemillas(1)
-        self.movimientoAnterior="empty"
+      self.aumentarSemillas(1)
+      self.movimientoAnterior="empty"
 
     #si hay un freezer y no hay semillas
     if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 3):
+      self.setEnemigosEncontrados(self.enemigosEncontrados+1)
       if self.semillas == 0:
         costo = 3
         self.setUltimaCasilla(3)
-        self.movimientoAnterior="empty"
-        
       else:
         costo = 0
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
-        self.movimientoAnterior="empty"
+      self.movimientoAnterior="empty"
 
     #si hay un cell y no hay semillas
     elif (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
+      self.setEnemigosEncontrados(self.enemigosEncontrados+1)
       if self.semillas == 0:
         costo = 6
         self.setUltimaCasilla(4)
-        self.movimientoAnterior="empty"
       else:
         costo = 0
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
-        self.movimientoAnterior="empty"
+      self.movimientoAnterior="empty"
     else:
       self.setUltimaCasilla(0)
 
@@ -165,6 +165,9 @@ class NodoCosto:
 
   def getSemillas(self):
     return self.semillas
+  
+  def getEnemigosEncontrados(self):
+    return self.enemigosEncontrados
 
   #metodos set
 
@@ -180,3 +183,6 @@ class NodoCosto:
 
   def setSemillas(self, cantidad):
     self.semillas = cantidad
+
+  def setEnemigosEncontrados(self, cantidad):
+    self.enemigosEncontrados = cantidad
