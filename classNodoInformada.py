@@ -39,11 +39,6 @@ class NodoInformada:
       if(self.mapa[self.goku_row][self.goku_col+1]==6):
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
-        
-      elif(self.mapa[self.goku_row][self.goku_col+1]==5
-         or self.mapa[self.goku_row][self.goku_col+1]==4
-         or self.mapa[self.goku_row][self.goku_col+1]==3):
-        self.movimientoAnterior=""
 
       self.funcion_costo(0, 1)
 
@@ -55,11 +50,6 @@ class NodoInformada:
       #Revisar si en la posicion a la que se va a mover hay una esfera
       if(self.mapa[self.goku_row][self.goku_col-1]==6):
         self.setEsferas(self.esferas+1)
-        self.movimientoAnterior=""
-
-      elif(self.mapa[self.goku_row][self.goku_col-1]==5 
-         or self.mapa[self.goku_row][self.goku_col-1]==4 
-         or self.mapa[self.goku_row][self.goku_col-1]==3):
         self.movimientoAnterior=""
 
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
@@ -76,11 +66,6 @@ class NodoInformada:
         self.setEsferas(self.esferas+1)
         self.movimientoAnterior=""
 
-      elif(self.mapa[self.goku_row-1][self.goku_col]==5
-         or self.mapa[self.goku_row-1][self.goku_col]==4
-         or self.mapa[self.goku_row-1][self.goku_col]==3):
-        self.movimientoAnterior=""
-
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
 
       self.funcion_costo(-1, 0)
@@ -93,11 +78,6 @@ class NodoInformada:
       #Revisar si en la posicion a la que se va a mover hay una esfera
       if(self.mapa[self.goku_row+1][self.goku_col]==6):
         self.setEsferas(self.esferas+1)
-        self.movimientoAnterior=""
-
-      elif(self.mapa[self.goku_row+1][self.goku_col]==5
-         or self.mapa[self.goku_row+1][self.goku_col]==4
-         or self.mapa[self.goku_row+1][self.goku_col]==3):
         self.movimientoAnterior=""
 
       self.mapa[self.goku_row][self.goku_col] = self.ultimaCasilla
@@ -121,9 +101,10 @@ class NodoInformada:
     
     if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 5):
         self.aumentarSemillas(1)
+        self.movimientoAnterior=""
 
     #si hay un freezer y no hay semillas
-    if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 3):
+    elif (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 3):
       if self.semillas == 0:
         costo = 3
         self.setUltimaCasilla(3)
@@ -131,6 +112,7 @@ class NodoInformada:
         costo = 0
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
+      self.movimientoAnterior=""
 
     #si hay un cell y no hay semillas
     elif (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 4):
@@ -141,6 +123,7 @@ class NodoInformada:
         costo = 0
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
+      self.movimientoAnterior=""
         
     else:
       self.setUltimaCasilla(0)
@@ -231,9 +214,11 @@ class NodoInformada:
 
   def setH1Obtenido(self):
     self.H1Obtenida = True
+    return True
   
   def setH2Obtenido(self):
     self.H2Obtenida = True
+    return True
 
   def setH(self):
     if(self.H1Obtenida):
@@ -244,6 +229,6 @@ class NodoInformada:
       return None
 
     if(self.h1 >= self.h2):
-      self.heuristica = self.h2
+      self.heuristica = self.h2 
     else:
       self.heuristica = self.h1

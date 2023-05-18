@@ -100,7 +100,7 @@ class NodoCosto:
       self.movimientoAnterior="empty"
 
     #si hay un freezer y no hay semillas
-    if (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 3):
+    elif (self.mapa[(self.goku_row)+fila][(self.goku_col)+columna] == 3):
       self.setEnemigosEncontrados(self.enemigosEncontrados+1)
       if self.semillas == 0:
         costo = 3
@@ -122,6 +122,7 @@ class NodoCosto:
         self.aumentarSemillas(-1)
         self.setUltimaCasilla(0)
       self.movimientoAnterior="empty"
+
     else:
       self.setUltimaCasilla(0)
 
