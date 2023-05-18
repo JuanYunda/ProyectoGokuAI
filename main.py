@@ -141,12 +141,13 @@ def cargar_mapa():
     global matrizInicial
     global solucion
 
+    mostrar_interfaz()
+    crear_botones()
+
     archivo = eg.fileopenbox(msg='Seleccione el nuevo mapa',
                             title='Seleccion de mapa',
                             multiple=False)
 
-    mostrar_interfaz()
-    crear_botones()
 
     if archivo is not None:
         mapa = open(archivo, 'r')

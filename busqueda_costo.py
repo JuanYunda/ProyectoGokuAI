@@ -15,6 +15,7 @@ def busqueda_costo(mapa):
   profundidadFinal = 0
   colaDeNodos = deque()
   colaOrdenada = deque()
+  todosLosNodos = []
 
   inicio = time.time()
   for i in range(len(mapa)):
@@ -22,7 +23,8 @@ def busqueda_costo(mapa):
      if mapa[i][j] == 2:
        goku_row, goku_col = i, j
 
-  nodoRaiz = NodoCosto(None, mapa, 0, goku_row, goku_col, "")
+  nodoRaiz = NodoCosto(None, mapa, 0, goku_row, goku_col, "empty")
+  todosLosNodos.append(nodoRaiz)
   nodo = nodoRaiz
   cantidadDeNodosExpandidos = 0
   flag = False
@@ -45,7 +47,7 @@ def busqueda_costo(mapa):
          break
        for j in range(len(mapa[i])):
          if navegar.getPadre() != None:
-           if navegar.getPadre().getEsferas() != nodo.getEsferas() or navegar.getPadre().getMovimientoAnterior() != "empty":
+           if navegar.getPadre().getEsferas() != nodo.getEsferas() or navegar.getPadre().getSemillas() != nodo.getSemillas() or navegar.getPadre().getEnemigosEncontrados() != nodo.getEnemigosEncontrados():
              flag = True
              break
            if nodo.getGoku_row() == navegar.getPadre().getGoku_row() and nodo.getGoku_col()-1 == navegar.getPadre().getGoku_col():
@@ -71,8 +73,10 @@ def busqueda_costo(mapa):
            nuevoNodo.setCosto(nodo.getCosto())
            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
            nuevoNodo.setSemillas(nodo.getSemillas())
+           nuevoNodo.setEnemigosEncontrados(nodo.getEnemigosEncontrados())
            nuevoNodo.move_right()
            colaDeNodos.append(nuevoNodo)
+           todosLosNodos.append(nuevoNodo)
 
      if nodo.getGoku_col() > 0 and left:
        if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()-1] != 1 and (nodo.getMovimientoAnterior() != "right" or nodo.getMovimientoAnterior() == ""): #left
@@ -82,8 +86,10 @@ def busqueda_costo(mapa):
            nuevoNodo.setCosto(nodo.getCosto())
            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
            nuevoNodo.setSemillas(nodo.getSemillas())
+           nuevoNodo.setEnemigosEncontrados(nodo.getEnemigosEncontrados())
            nuevoNodo.move_left()
            colaDeNodos.append(nuevoNodo)
+           todosLosNodos.append(nuevoNodo)
 
      if nodo.getGoku_row() < len(mapa)-1 and down:
        if nodo.getMapa()[nodo.getGoku_row()+1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "up" or nodo.getMovimientoAnterior() == ""): #down
@@ -93,8 +99,10 @@ def busqueda_costo(mapa):
            nuevoNodo.setCosto(nodo.getCosto())
            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
            nuevoNodo.setSemillas(nodo.getSemillas())
+           nuevoNodo.setEnemigosEncontrados(nodo.getEnemigosEncontrados())
            nuevoNodo.move_down()
            colaDeNodos.append(nuevoNodo)
+           todosLosNodos.append(nuevoNodo)
 
      if nodo.getGoku_row() > 0 and up:
        if nodo.getMapa()[nodo.getGoku_row()-1][nodo.getGoku_col()] != 1 and (nodo.getMovimientoAnterior() != "down" or nodo.getMovimientoAnterior() == ""): #up
@@ -104,8 +112,10 @@ def busqueda_costo(mapa):
            nuevoNodo.setCosto(nodo.getCosto())
            nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
            nuevoNodo.setSemillas(nodo.getSemillas())
+           nuevoNodo.setEnemigosEncontrados(nodo.getEnemigosEncontrados())
            nuevoNodo.move_up()
            colaDeNodos.append(nuevoNodo)
+           todosLosNodos.append(nuevoNodo)
 
      colaOrdenada = sorted(colaDeNodos, key=NodoCosto.getCosto)
      colaDeNodos = deque(colaOrdenada)
@@ -124,5 +134,9 @@ def busqueda_costo(mapa):
   fin = time.time()
   solucion.append(mapa)
   print("solución registrada")
+
+  
+  for obj in todosLosNodos:
+    del obj
 
   return solucion, cantidadDeNodosExpandidos, profundidadFinal, fin - inicio, costoFinal
