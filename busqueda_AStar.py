@@ -20,6 +20,7 @@ def busqueda_A_Star(mapa):
 
     goku_row, goku_col = 0, 0
     esf1_row, esf1_col, esf2_row, esf2_col = 0, 0, 0, 0
+    esf1, esf2 = False, False
     flag = 0
     inicio = time.time()
     for i in range(len(mapa)):
@@ -28,9 +29,10 @@ def busqueda_A_Star(mapa):
                 goku_row, goku_col = i, j
             if mapa[i][j] == 6 and flag == 0:
                 esf1_row, esf1_col = i, j
-                flag = 0
-            if mapa[i][j] == 6 and flag == 1:
+                flag = 1
+            elif mapa[i][j] == 6 and flag == 1:
                 esf2_row, esf2_col = i, j
+                flag = 2
 
 
     nodoRaiz = NodoInformada(None, mapa, 0, goku_row, goku_col, "", False, False)
@@ -42,12 +44,12 @@ def busqueda_A_Star(mapa):
     nodo.setH()
     # a=0
     while (True):
-        resultado = nodo
         cantidadDeNodosExpandidos += 1
-        if (nodo.getGoku_row() == esf1_row and nodo.getGoku_col() == esf1_col):
-            nodo.setH1Obtenido()
-        if (nodo.getGoku_row() == esf2_row and nodo.getGoku_col() == esf2_col):
-            nodo.setH2Obtenido()
+        resultado = nodo
+        if (nodo.getGoku_row() == esf1_row and nodo.getGoku_col() == esf1_col and not esf1):
+            esf1 = nodo.setH1Obtenido()
+        elif (nodo.getGoku_row() == esf2_row and nodo.getGoku_col() == esf2_col and not esf2):
+            esf2 = nodo.setH2Obtenido()
 
         if nodo.getEsferas() == 2:
             profundidadFinal = nodo.getProfundidad()
@@ -115,7 +117,6 @@ def busqueda_A_Star(mapa):
             colaOrdenada = sorted(colaDeNodos, key=NodoInformada.getHAStar)
             colaDeNodos = deque(colaOrdenada)
             nodo = colaDeNodos.popleft()
-
     solucion = []
 
     # guarda los movimientos optimos para llegar a la solucion.
