@@ -51,17 +51,19 @@ def busqueda_Avara(mapa):
             profundidadFinal = nodo.getProfundidad()
             resultado = nodo
             break
-
+        
         else:
             navegar = nodo
-            for i in range(len(mapa)):
+            for i in range(len(mapa)): #filas
                 if flagCiclo:
                     break
-                for j in range(len(mapa[i])):
+                for j in range(len(mapa[i])): #columnas
                     if navegar.getPadre() != None:
-                        if navegar.getPadre().getEsferas() != nodo.getEsferas():
+                        if navegar.getPadre().getEsferas() != nodo.getEsferas(): #si el padre del nodo tiene una cantidad diferente, termina el ciclo
                             flagCiclo = True
                             break
+
+                        #las siguientes condicionales verifican si goku ya estuvo en alguna casilla de las que se puede mover.
                         if nodo.getGoku_row() == navegar.getPadre().getGoku_row() and nodo.getGoku_col()-1 == navegar.getPadre().getGoku_col():
                             left = False
                         if nodo.getGoku_row() == navegar.getPadre().getGoku_row() and nodo.getGoku_col()+1 == navegar.getPadre().getGoku_col():
@@ -70,7 +72,8 @@ def busqueda_Avara(mapa):
                             up = False
                         if nodo.getGoku_row()+1 == navegar.getPadre().getGoku_row() and nodo.getGoku_col() == navegar.getPadre().getGoku_col():
                             down = False
-                        navegar = navegar.getPadre()
+
+                        navegar = navegar.getPadre() #se sigue navegando los siguientes padres hasta un cambio de la cantidad de esferas
 
             if nodo.getGoku_col() < len(mapa[0])-1 and right:
                 if nodo.getMapa()[nodo.getGoku_row()][nodo.getGoku_col()+1] != 1 and (nodo.getMovimientoAnterior() != "left" or nodo.getMovimientoAnterior() == ""):  # right
@@ -124,7 +127,7 @@ def busqueda_Avara(mapa):
                     nuevoNodo.setH()
                     colaDeNodos.append(nuevoNodo)
 
-            colaHeuristica = sorted(colaDeNodos, key=NodoInformada.getHAvara)
+            colaHeuristica = sorted(colaDeNodos, key=NodoInformada.getHAvara) #ordena los nodos segun el valor de su heursitica (menor a mayor)
             colaDeNodos = deque(colaHeuristica)
             nodo = colaDeNodos.popleft()
             left, right, up, down = True, True, True, True

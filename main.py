@@ -33,7 +33,7 @@ def draw_map(canvas, map_data):
     6: img_esfera,
     }
     
-    # Dibujar cada celda en el canvas con el color correspondiente
+    # Dibujar cada celda en el canvas con la imagen correspondiente
     filas = len(map_data)
     colum = len(map_data[0])
     for row_idx in range(filas):
@@ -42,7 +42,7 @@ def draw_map(canvas, map_data):
             y1 = row_idx * CELL_SIZE
             canvas.create_image(x1, y1, image=images[int(map_data[row_idx][col_idx])], anchor='nw')
 
-# Función para ejecutar la búsqueda correspondiente
+# Función que imprime la solución que retorna la función de busqueda
 def imprimir():
     # Actualizar el ciclo for para que recorra la lista de soluciones
     for i in reversed(solucion):
@@ -54,12 +54,15 @@ def imprimir():
         ventana.update()
         time.sleep(0.5)
 
+#funciones de busqueda
 def busqueda_anchura():
     global solucion
     global flag
     global etiqueta_costo
-    solucion, nodosExpandidos, profundidadFinal, tiempo = busqueda_amplitud(matrizInicial)
-    if flag:
+    solucion, nodosExpandidos, profundidadFinal, tiempo = busqueda_amplitud(matrizInicial) #resultado de la función de busqueda
+    
+    #elimina la etiqueta de costo de la interfaz
+    if flag: #verifica si la etiqueta costo está en la interfaz
         if etiqueta_costo is not None:
             etiqueta_costo.destroy()
         etiqueta_costo = None
@@ -86,6 +89,8 @@ def busqueda_costo_uniforme():
     global etiqueta_costo
     global flag
     solucion, nodosExpandidos, profundidadFinal, tiempo, costo = busqueda_costo(matrizInicial)
+
+    #crea la etiqueta de costo de la interfaz
     if not flag:
         if etiqueta_costo is not None:
             etiqueta_costo.config(text='Costo de la solución: ' + str(costo))
@@ -137,6 +142,7 @@ def actualizarValores(expand, prof, tiem, cost):
     etiqueta_tiempo.config(text='Tiempo de la solución: ' + str(tiem))
     etiqueta_costo.config(text='Costo de la solución: ' + str(cost))
 
+#reconfigura los elementos dentro de la interfaz (funcion que sirve si se desea realizar mas de un tipo de busqueda en la misma ejecución)
 def cargar_mapa():
     global matrizInicial
     global solucion
@@ -167,21 +173,21 @@ def cargar_mapa():
 def crear_botones():
     global botones
 
-    if botones is not None:
+    if botones is not None: #verifica si la ventana de botones ya existe para eliminarlos y volver a crearlos sin problemas
         botones.destroy()
         botones = None
         
-    botones = tk.Frame(ventana)
+    botones = tk.Frame(ventana) #crea la ventana para los botones
     botones.pack(side='bottom', pady=10)
 
-    if tipo_busqueda:
+    if tipo_busqueda: #añade los botones para las busquedas informadas
         btn_a_estrella = tk.Button(botones, text='Búsqueda A*', command=busqueda_a_estrella)
         btn_a_estrella.pack(side='left', padx=5)
     
         btn_voraz = tk.Button(botones, text='Búsqueda Avara', command=busqueda_avara)
         btn_voraz.pack(side='left', padx=5)
 
-    else:
+    else: #añade los botones para las busquedas no informadas
         btn_anchura = tk.Button(botones, text='Búsqueda por Amplitud', command=busqueda_anchura)
         btn_anchura.pack(side='left', padx=5)
     
@@ -191,15 +197,16 @@ def crear_botones():
         btn_profundidad = tk.Button(botones, text='Búsqueda en Profundidad', command=busqueda_de_profundidad)
         btn_profundidad.pack(side='left', padx=5)
 
+#funcion asociada al boton de salir, que cierra la ventana
 def cerrar_programa():
     ventana.destroy()
 
-# Función para cambiar el valor de la variable booleana global
+# Función para cambiar el valor de la variable booleana que indica si se seleccionó busqueda informada o no informada
 def cambiar_variable(valor):
     global tipo_busqueda
     tipo_busqueda = valor
 
-# Función para mostrar la interfaz flotante
+# Función que muestra la interfaz flotante para seleccionar entre busqueda informada o no informada
 def mostrar_interfaz():
     respuesta = easygui.buttonbox("Seleccione el tipo de busqueda a realizar:", choices=["Busqueda Informada", "Busqueda No Informada"])
     if respuesta == "Busqueda Informada":

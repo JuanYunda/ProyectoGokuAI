@@ -43,9 +43,11 @@ def busqueda_costo(mapa):
          break
        for j in range(len(mapa[i])):
          if navegar.getPadre() != None:
+           #el siguiente condicional verifica si alguno de los padres del nodo que se esta expandiendo tiene un cambio de la cantidad de esferas, semillas o verifica si pasó a algún enemigo
            if navegar.getPadre().getEsferas() != nodo.getEsferas() or navegar.getPadre().getSemillas() != nodo.getSemillas() or navegar.getPadre().getEnemigosEncontrados() != nodo.getEnemigosEncontrados():
              flag = True
              break
+           #las siguientes condicionales verifican si goku ya estuvo en alguna casilla de las que se puede mover.
            if nodo.getGoku_row() == navegar.getPadre().getGoku_row() and nodo.getGoku_col()-1 == navegar.getPadre().getGoku_col():
              left = False
              #print("no left")
@@ -109,7 +111,7 @@ def busqueda_costo(mapa):
            nuevoNodo.move_up()
            colaDeNodos.append(nuevoNodo)
 
-     colaOrdenada = sorted(colaDeNodos, key=NodoCosto.getCosto)
+     colaOrdenada = sorted(colaDeNodos, key=NodoCosto.getCosto) #ordena los nodos segun su costo (menor a mayor)
      colaDeNodos = deque(colaOrdenada)
      nodo = colaDeNodos.popleft()
     

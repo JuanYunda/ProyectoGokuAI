@@ -16,38 +16,43 @@ def busqueda_A_Star(mapa):
     profundidadFinal = 0
 
     colaDeNodos = deque()
-    colaOrdenada = deque()
+    colaOrdenada = deque() #cola que contiene los nodos sin expandir pero
+                           # ordenados segun la suma de la heuristica y su costo (menor a mayor)
 
     goku_row, goku_col = 0, 0
     esf1_row, esf1_col, esf2_row, esf2_col = 0, 0, 0, 0
     esf1, esf2 = False, False
     flag = 0
     inicio = time.time()
+    
+    #ciclo for que busca a goku y cada esfera por toda la matriz/mapa
     for i in range(len(mapa)):
         for j in range(len(mapa[i])):
             if mapa[i][j] == 2:
                 goku_row, goku_col = i, j
-            if mapa[i][j] == 6 and flag == 0:
+            if mapa[i][j] == 6 and flag == 0:#si en la posición i,j de la matriz se encuentra un numero 6
+                                             #es porque esa es la posición de la primera esfera y se almacena
                 esf1_row, esf1_col = i, j
-                flag = 1
-            elif mapa[i][j] == 6 and flag == 1:
+                flag = 1 #flag que indica si ya se encontro la primera esfera
+            elif mapa[i][j] == 6 and flag == 1:#si en la posición i,j de la matriz se encuentra un numero 6
+                                               #es porque esa es la posición de la segunda esfera y se almacena
                 esf2_row, esf2_col = i, j
-                flag = 2
+                flag = 2 #flag que indica si ya se encontro la segunda esfera
 
 
     nodoRaiz = NodoInformada(None, mapa, 0, goku_row, goku_col, "", False, False)
     nodo = nodoRaiz
     cantidadDeNodosExpandidos = 0
     costoFinal = 0
-    nodo.setH1(esf1_col, esf1_row)
-    nodo.setH2(esf2_col,esf2_row)
-    nodo.setH()
-    # a=0
+
+    #ciclo while que expande nodos con menor costo+heuristica y crea sus nodo hijos
     while (True):
         cantidadDeNodosExpandidos += 1
-        resultado = nodo
+
+        #condicional que verifica si ya se recogió la primera esfera (no necesariamente se recoge la primera antes que la segunda)
         if (nodo.getGoku_row() == esf1_row and nodo.getGoku_col() == esf1_col and not esf1):
             esf1 = nodo.setH1Obtenido()
+        #condicional que verifica si ya se recogió la segunda esfera (no necesariamente se recoge la primera antes que la segunda)
         elif (nodo.getGoku_row() == esf2_row and nodo.getGoku_col() == esf2_col and not esf2):
             esf2 = nodo.setH2Obtenido()
 
@@ -67,9 +72,9 @@ def busqueda_A_Star(mapa):
                     nuevoNodo.setUltimaCasilla(nodo.getUltimaCasilla())
                     nuevoNodo.setSemillas(nodo.getSemillas())
                     nuevoNodo.move_right()
-                    nuevoNodo.setH1(esf1_col, esf1_row)
-                    nuevoNodo.setH2(esf2_col, esf2_row)
-                    nuevoNodo.setH()
+                    nuevoNodo.setH1(esf1_col, esf1_row) #calcula la heurisitica a la primera esfera
+                    nuevoNodo.setH2(esf2_col, esf2_row) #calcula la heurisitica de la segunda esfera
+                    nuevoNodo.setH() #define cual de las dos esferas está mas cerca para asignar esta como principal objetivo
                     colaDeNodos.append(nuevoNodo)
 
             if nodo.getGoku_col() > 0:
@@ -114,8 +119,8 @@ def busqueda_A_Star(mapa):
                     nuevoNodo.setH()
                     colaDeNodos.append(nuevoNodo)
 
-            colaOrdenada = sorted(colaDeNodos, key=NodoInformada.getHAStar)
-            colaDeNodos = deque(colaOrdenada)
+            colaOrdenada = sorted(colaDeNodos, key=NodoInformada.getHAStar) #ordena la cola de nodos segun la heurisitca+costo (funcion getHAStar devuelve la suma) (ordena de menor a mayor)
+            colaDeNodos = deque(colaOrdenada) #redefine la cola de nodos ya ordenada
             nodo = colaDeNodos.popleft()
     solucion = []
 
